@@ -10888,8 +10888,20 @@ form.user .form-control-user {
   padding: 1.5rem 1rem;
 }
 
+form.user .form-control-textarea {
+  font-size: 0.8rem;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+}
+
 form.user .btn-user {
   font-size: 0.8rem;
+  border-radius: 10rem;
+  padding: 0.75rem 1rem;
+}
+
+form.user .remove-button {
+  font-size: 0.9rem;
   border-radius: 10rem;
   padding: 0.75rem 1rem;
 }

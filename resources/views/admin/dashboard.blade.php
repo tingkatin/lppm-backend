@@ -309,7 +309,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::guard('author')->check() ? Auth::guard('author')->user()->name : Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
                                     src='{{asset("admin/img/undraw_profile.svg")}}'>
                             </a>
@@ -346,8 +346,18 @@
 
                     <!-- Page Heading -->
                     @include('partial.alert')
+                    @if (Auth::guard('author')->user()->email_verified_at == null)
+                    <div class="alert alert-danger mb-4" role="alert">
+                        Kami telah mengirimkan link verifikasi ke email Anda. Jika Anda tidak menerima email, <form class="d-inline" method="POST" action="{{ route('verification.send') }}">@csrf @method('POST') <button style="all:unset;cursor:pointer;color:blue;text-decoration:underline;" type="submit">Kirim Ulang</button></form> email verifikasi. 
+                    </div>
+                    @endif
+                    @if (Auth::guard('author')->user()->email_verified_at && Auth::guard('author')->user()->is_approved == 0)
+                    <div class="alert alert-danger mb-4" role="alert">
+                        Untuk bisa menggunakan semua fitur pengguna, mohon menunggu admin melakukan verifikasi akun Anda. Kami akan mengirim email dan notifikasi kepada Anda saat admin telah mem-verifikasi akun Anda.
+                    </div>
+                    @endif
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Selamat datang, {{ Auth::guard('author')->check() ? Auth::guard('author')->user()->name : Auth::user()->name }}!</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
